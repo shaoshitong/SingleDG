@@ -16,7 +16,7 @@ synth = 'synth'
 usps = 'usps'
 
 vlcs_datasets = ["CALTECH", "LABELME", "PASCAL", "SUN"]
-pacs_datasets = ["art_painting", "cartoon", "photo", "sketch"]
+pacs_datasets = ["test_art_painting_stage1.txt", "cartoon", "photo", "sketch"]
 office_datasets = ["amazon", "dslr", "webcam"]
 digits_datasets = [mnist, mnist, svhn, usps]
 available_datasets = office_datasets + pacs_datasets + vlcs_datasets + digits_datasets
@@ -143,11 +143,12 @@ def get_multiple_val_dataloader(args, patches=False):
 
 # JIGSAW
 def get_train_transformers(args):
-    img_tr = [transforms.RandomResizedCrop((int(args.image_size), int(args.image_size)), (args.min_scale, args.max_scale))]
+    img_tr = [transforms.RandomResizedCrop((int(args.image_size), int(args.image_size)), (args.min_scale, args.max_scale),interpolation=transforms.InterpolationMode.NEAREST)]
     if args.random_horiz_flip > 0.0:
         img_tr.append(transforms.RandomHorizontalFlip(args.random_horiz_flip))
     if args.jitter > 0.0:
         img_tr.append(transforms.ColorJitter(brightness=args.jitter, contrast=args.jitter, saturation=args.jitter, hue=min(0.5, args.jitter)))
+    img_tr.append(transforms.AutoAugment(policy=transforms.AutoAugmentPolicy.CIFAR10))
     img_tr.append(transforms.ToTensor())
     img_tr.append(transforms.Normalize([0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]))
     tile_tr = []

@@ -20,7 +20,7 @@ class ResNet(nn.Module):
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
         self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
-        self.avgpool = nn.AvgPool2d(7, stride=1)
+        self.avgpool = nn.AdaptiveAvgPool2d((1,1))
         self.class_classifier = nn.Linear(512, classes)
 
         self.p_logvar = nn.Sequential(nn.Linear(512 * block.expansion, 512),
@@ -72,9 +72,9 @@ class ResNet(nn.Module):
         end_points['mu'] = mu
 
         if train:
-            x = reparametrize(mu, logvar)
+            x = reparametrize(mu, logvar) # ReLU
         else:
-            x = mu
+            x = mu # LeakyReLU
         end_points['Embedding'] = x
         x = self.class_classifier(x)
         end_points['Predictions'] = nn.functional.softmax(input=x, dim=-1)

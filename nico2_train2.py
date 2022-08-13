@@ -5,6 +5,7 @@ import os
 from torch import nn
 from torch.nn import functional as F
 from data import data_helper
+from data.cutmix import cutmix
 from data.data_helper import available_datasets
 from models import model_factory
 
@@ -14,6 +15,7 @@ from utils.util import *
 from models.augnet import AugNet
 from models.caffenet import caffenet
 from models.resnet import resnet18
+from models.pyramidnet import pyramidnet272
 from utils.contrastive_loss import SupConLoss
 
 from torchvision import transforms
@@ -36,7 +38,7 @@ def get_args():
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--source", choices=available_datasets, help="Source", nargs='+')
     parser.add_argument("--target", choices=available_datasets, help="Target")
-    parser.add_argument("--batch_size", "-b", type=int, default=64, help="Batch size")
+    parser.add_argument("--batch_size", "-b", type=int, default=16, help="Batch size")
     parser.add_argument("--image_size", type=int, default=224, help="Image size")
     parser.add_argument("--seed", type=int, default=1, help="random seed")
     # data aug stuff
@@ -51,7 +53,7 @@ def get_args():
     parser.add_argument("--limit_target", default=None, type=int,
                         help="If set, it will limit the number of testing samples")
     parser.add_argument("--learning_rate", "-l", type=float, default=.001, help="Learning rate")
-    parser.add_argument("--epochs", "-e", type=int, default=30, help="Number of epochs")
+    parser.add_argument("--epochs", "-e", type=int, default=100, help="Number of epochs")
     parser.add_argument("--network", choices=model_factory.nets_map.keys(), help="Which network to use", default="resnet18")
     parser.add_argument("--tf_logger", type=bool, default=True, help="If true will save tensorboard compatible logs")
     parser.add_argument("--val_size", type=float, default="0.1", help="Validation size (between 0 and 1)")
@@ -76,17 +78,80 @@ def get_args():
 
     return parser.parse_args()
 
+
+
+def load_model(model_dict, model):
+    model_state_dict = model.state_dict()
+    pretrained_dict = {
+        k: v
+        for k, v in model_dict.items()
+        if k in model_state_dict and v.shape == model_state_dict[k].shape
+    }
+    print(
+        f"the prune number is {round((len(model_state_dict.keys())-len(pretrained_dict.keys()))*100/len(model_state_dict.keys()),3)}%"
+    )
+    print("missing keys:")
+    for key in model_state_dict.keys():
+        if key not in pretrained_dict:
+            print(key)
+    model_state_dict.update(pretrained_dict)
+    model.load_state_dict(model_state_dict)
+    return model
+
+class KDLoss(nn.KLDivLoss):
+    """
+    "Distilling the Knowledge in a Neural Network"
+    """
+
+    def __init__(self, temperature=4, alpha=1, beta=1, reduction="batchmean", **kwargs):
+        super().__init__(reduction=reduction)
+        self.temperature = temperature
+        self.alpha = alpha
+        self.beta = 1 - alpha if beta is None else beta
+
+    def forward(self, student_output, teacher_output, targets=None, *args, **kwargs):
+        soft_loss = super().forward(
+            torch.log_softmax(student_output / self.temperature, dim=1),
+            torch.softmax(teacher_output / self.temperature, dim=1),
+        )
+        hard_loss = super().forward(torch.log_softmax(student_output, 1), targets)
+        return self.alpha * hard_loss + self.beta * (self.temperature ** 2) * soft_loss
+
+class EMA(object):
+    def __init__(self, teacher_model_list, student_model_list, momentum=0.999):
+        super(EMA, self).__init__()
+        self.teacher_model_list = teacher_model_list
+        self.student_model_list = student_model_list
+        self.momentum = momentum
+
+    @torch.no_grad()
+    def step(self):
+        for teacher_model, student_model in zip(self.teacher_model_list, self.student_model_list):
+            for teacher_parameter, student_parameter in zip(
+                teacher_model.parameters(), student_model.parameters()
+            ):
+                teacher_parameter.mul_(self.momentum).add_(
+                    (1.0 - self.momentum) * student_parameter
+                )
+
 class Trainer:
     def __init__(self, args, device):
         self.args = args
         self.device = device
         self.counterk=0
-
+        self.warmup_epoch=10
         # Caffe Alexnet for singleDG task, Leave-one-out PACS DG task.
         # self.extractor = caffenet(args.n_classes).to(device)
-        self.extractor = resnet18(classes=args.n_classes).to(device)
-        self.convertor = AugNet(1).cuda()
-
+        self.extractor = pyramidnet272(num_classes=7)
+        dict1=torch.load("original_epoch_best.pth")['model']
+        dict1={k.replace("module.model.",""):v for k,v in dict1.items()}
+        load_model(dict1,self.extractor)
+        self.extractor.cuda()
+        self.scaler=torch.cuda.amp.GradScaler()
+        self.teacher = pyramidnet272(num_classes=7).to(device)
+        self.teacher.load_state_dict(torch.load("./ckpt/best_sketch_stage1"))
+        self.teacher.eval()
+        self.kd_loss=KDLoss().cuda()
         self.source_loader, self.val_loader = data_helper.get_train_dataloader(args, patches=False)
         if len(self.args.target) > 1:
             self.target_loader = data_helper.get_multiple_val_dataloader(args, patches=False)
@@ -95,18 +160,14 @@ class Trainer:
 
         self.test_loaders = {"val": self.val_loader, "test": self.target_loader}
         self.len_dataloader = len(self.source_loader)
-
+        self.ema = EMA([self.teacher],[self.extractor])
         # Get optimizers and Schedulers, self.discriminator
         self.optimizer = torch.optim.SGD(self.extractor.parameters(), lr=self.args.learning_rate, nesterov=True, momentum=0.9, weight_decay=0.0005)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=int(self.args.epochs *0.8))
-
-        self.convertor_opt = torch.optim.SGD(self.convertor.parameters(), lr=self.args.lr_sc)
-
+        self.lr = self.args.learning_rate
         self.n_classes = args.n_classes
         self.centroids = 0
         self.d_representation = 0
         self.flag = False
-        self.con = SupConLoss()
         if args.target in args.source:
             self.target_id = args.source.index(args.target)
             print("Target in source: %d" % self.target_id)
@@ -118,183 +179,120 @@ class Trainer:
     def _do_epoch(self, epoch=None):
         criterion = nn.CrossEntropyLoss()
         self.extractor.train()
-        tran = transforms.Normalize([0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        count_nums=0
+        count_acc=0
+        total_loss=0
         for it, ((data, _, class_l), _, idx) in enumerate(self.source_loader):
             data, class_l = data.to(self.device), class_l.to(self.device)
-
-            # Stage 1
+            data,class_l = cutmix(data,class_l)
             self.optimizer.zero_grad()
-
-            # Aug
-            inputs_max = tran(torch.sigmoid(self.convertor(data)))
-            inputs_max = inputs_max * 0.6 + data * 0.4
-            data_aug = torch.cat([inputs_max, data])
-            labels = torch.cat([class_l, class_l])
-
-            # forward
-            logits, tuple = self.extractor(data_aug)
-
-            # Maximize MI between z and z_hat
-            emb_src = F.normalize(tuple['Embedding'][:class_l.size(0)]).unsqueeze(1)
-            emb_aug = F.normalize(tuple['Embedding'][class_l.size(0):]).unsqueeze(1)
-            # TODO: supcon Loss 增强语义之间的共同MI（互信息）
-            con = self.con(torch.cat([emb_src, emb_aug], dim=1), class_l) # bs,2,embedding_dim,bs
-
-
-            # Likelihood 可能性
-            mu = tuple['mu'][class_l.size(0):]
-            logvar = tuple['logvar'][class_l.size(0):] # original sample
-            y_samples = tuple['Embedding'][:class_l.size(0)] # augment sample
-            # TODO: 最小化负对数似然函数
-            likeli = -loglikeli(mu, logvar, y_samples)
-
-            # Total loss & backward
-            # TODO: 分类损失
-            class_loss = criterion(logits, labels)
+            with torch.cuda.amp.autocast():
+                logits = self.extractor(data)
+                # TODO: 分类损失
+                with torch.no_grad():
+                    t_logits = self.teacher(data)
+                class_loss = self.kd_loss(logits,t_logits,class_l)
+                # class_loss = criterion(logits, class_l)
             # TODO: phase1
-            loss = class_loss + self.args.alpha2*likeli + self.args.alpha1*con
-            loss.backward()
-            self.optimizer.step()
+            self.scaler.scale(class_loss).backward()
+            self.scaler.step(self.optimizer)
+            self.scaler.update()
             _, cls_pred = logits.max(dim=1)
-
-            # STAGE 2
-            inputs_max =tran(torch.sigmoid(self.convertor(data, estimation=True)))
-            inputs_max = inputs_max * 0.6 + data * 0.4
-            data_aug = torch.cat([inputs_max, data])
-
-            # forward with the adapted parameters
-            outputs, tuples = self.extractor(x=data_aug)
-
-            # Upper bound MI
-            mu = tuples['mu'][class_l.size(0):]
-            logvar = tuples['logvar'][class_l.size(0):]
-            y_samples = tuples['Embedding'][:class_l.size(0)]
-            # TODO: MI between augmented sample and original sample
-            div = club(mu, logvar, y_samples)
-
-            # Semantic consistency
-            e = tuples['Embedding']
-            e1 = e[:class_l.size(0)]
-            e2 = e[class_l.size(0):]
-            # TODO: MMD Loss
-            dist = conditional_mmd_rbf(e1, e2, class_l, num_class=self.args.n_classes)
-
-            # Total loss and backward
-            self.convertor_opt.zero_grad()
-            (dist + self.args.beta * div).backward()
-            self.convertor_opt.step()
-            self.logger.log(it, len(self.source_loader),
-                            {"class": class_loss.item(),
-                             "AUG:": torch.sum(cls_pred[:class_l.size(0)] == class_l.data).item() / class_l.shape[0],
-                             },
-                            {"class": torch.sum(cls_pred[class_l.size(0):] == class_l.data).item()},
-                            class_l.shape[0])
-
-        del loss, class_loss, logits
-
+            count_acc += (cls_pred ==  class_l.argmax(1)).sum().item()
+            count_nums += class_l.shape[0]
+            total_loss += class_loss.item()
+            if epoch%50==0:
+                self.ema.step()
+        total_loss = total_loss/len(self.source_loader)
+        total_acc = round(count_acc*100 / count_nums, 2)
+        print(f"Epoch: {epoch}, Acc: {total_acc}%")
         self.extractor.eval()
         with torch.no_grad():
             if len(self.args.target) > 1:
                 avg_acc = 0
                 for i, loader in enumerate(self.target_loader):
                     total = len(loader.dataset)
-
                     class_correct = self.do_test(loader)
-
                     class_acc = float(class_correct) / total
                     self.logger.log_test('test', {"class": class_acc})
-
                     avg_acc += class_acc
                 avg_acc = avg_acc / len(self.args.target)
-                print(avg_acc)
-                self.results["test"][self.current_epoch] = avg_acc
+                print(f"Epoch: {epoch}, Acc: {avg_acc}%")
+                return total_loss, epoch, avg_acc
             else:
                 for phase, loader in self.test_loaders.items():
                     if self.args.task == 'HOME' and phase == 'val':
                         continue
                     total = len(loader.dataset)
-
                     class_correct = self.do_test(loader)
-
                     class_acc = float(class_correct) / total
-                    self.logger.log_test(phase, {"class": class_acc})
-                    self.results[phase][self.current_epoch] = class_acc
-
+                    print(f"Phase: {phase}, Epoch: {epoch}, Acc: {class_acc}%")
+                return total_loss, epoch, class_acc
     def do_test(self, loader):
         class_correct = 0
         for it, ((data, nouse, class_l), _, _) in enumerate(loader):
             data, nouse, class_l = data.to(self.device), nouse.to(self.device), class_l.to(self.device)
-
-
-            z = self.extractor(data, train=False)[0]
-
-
+            z = self.extractor(data)
             _, cls_pred = z.max(dim=1)
-
             class_correct += torch.sum(cls_pred == class_l.data)
-
         return class_correct
 
     def do_training(self):
+        prev_loss = 999
+        train_loss = 99
         self.logger = Logger(self.args, update_frequency=30)
         self.results = {"val": torch.zeros(self.args.epochs), "test": torch.zeros(self.args.epochs)}
         current_high = 0
         for self.current_epoch in range(self.args.epochs):
-            self.logger.new_epoch(self.scheduler.get_lr())
-            self._do_epoch(self.current_epoch)
-            self.scheduler.step()
-            if self.results["test"][self.current_epoch] > current_high:
+            self.warm_up(self.current_epoch,now_loss=train_loss,prev_loss=prev_loss,decay_rate=0.9)
+            prev_loss = train_loss
+            train_loss, current_epoch, val_acc = self._do_epoch(self.current_epoch)
+            if val_acc > current_high:
                 print('Saving Best model ...')
-                torch.save(self.extractor.state_dict(), os.path.join('ckpt1/', 'best_' + self.args.target[0]))
-                current_high = self.results["test"][self.current_epoch]
-        val_res = self.results["val"]
-        test_res = self.results["test"]
-        idx_best = test_res.argmax()
-        print("Best val %g, corresponding test %g - best test: %g, best test epoch: %g" % (
-        val_res.max(), test_res[idx_best], test_res.max(), idx_best))
-        self.logger.save_best(test_res[idx_best], test_res.max())
-        return self.logger
+                torch.save(self.extractor.state_dict(), os.path.join('ckpt/', 'best_' + self.args.target[0] + '_stage2'))
+                current_high = val_acc
+        print(f"Best Acc is {current_high}%")
 
     def do_eval(self):
-        self.logger = Logger(self.args, update_frequency=30)
         self.results = {"val": torch.zeros(self.args.epochs), "test": torch.zeros(self.args.epochs)}
-        current_high = 0
-        self.logger.new_epoch(self.scheduler.get_lr())
         self.extractor.eval()
+        total_acc=0
+        total_nums=0
         with torch.no_grad():
             for phase, loader in self.test_loaders.items():
                 total = len(loader.dataset)
-
                 class_correct = self.do_test(loader)
+                total_acc += float(class_correct)
+                total_nums+= total
+        acc = round(total_acc/total_nums,2)
+        print(f"Best Acc is {acc}%")
 
-                class_acc = float(class_correct) / total
-                self.logger.log_test(phase, {"class": class_acc})
-                self.results[phase][0] = class_acc
-
-        val_res = self.results["val"]
-        test_res = self.results["test"]
-        idx_best = test_res.argmax()
-        print("Best val %g, corresponding test %g - best test: %g, best test epoch: %g" % (
-            val_res.max(), test_res[idx_best], test_res.max(), idx_best))
-        self.logger.save_best(test_res[idx_best], test_res.max())
-        return self.logger
+    def warm_up(self, epoch, now_loss=None, prev_loss=None, decay_rate=0.9):
+        if epoch <= self.warmup_epoch:
+            self.optimizer.param_groups[0]["lr"] = self.lr * epoch / self.warmup_epoch
+        elif now_loss is not None and prev_loss is not None:
+            delta = prev_loss - now_loss
+            if delta / now_loss < 0.02 and delta < 0.02 and delta > -0.02:
+                self.optimizer.param_groups[0]["lr"] *= decay_rate
+        p_lr = self.optimizer.param_groups[0]["lr"]
+        print(f"lr = {p_lr}")
 
 def main():
     args = get_args()
 
     if args.task == 'PACS':
         args.n_classes = 7
-        args.source = ['test_art_painting_stage1.txt', 'cartoon', 'sketch']
-        args.target = ['photo']
-        # args.source = ['test_art_painting_stage1.txt', 'photo', 'cartoon']
-        # args.target = ['sketch']
-        # args.source = ['test_art_painting_stage1.txt', 'photo', 'sketch']
+        # args.source = ['art_painting', 'cartoon', 'sketch']
+        # args.target = ['photo']
+        args.source = ['art_painting', 'photo', 'cartoon']
+        args.target = ['sketch']
+        # args.source = ['art_painting', 'photo', 'sketch']
         # args.target = ['cartoon']
         # args.source = ['photo', 'cartoon', 'sketch']
-        # args.target = ['test_art_painting_stage1.txt']
+        # args.target = ['art_painting']
         # --------------------- Single DG
         # args.source = ['photo']
-        # args.target = ['test_art_painting_stage1.txt', 'cartoon', 'sketch']
+        # args.target = ['art_painting', 'cartoon', 'sketch']
 
     elif args.task == 'VLCS':
         args.n_classes = 5

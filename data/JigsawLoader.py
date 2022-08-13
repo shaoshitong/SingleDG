@@ -170,7 +170,7 @@ class JigsawNewDataset(data.Dataset):
                  bias_whole_image=None):
         self.task = args.task
         if self.task == 'PACS':
-            self.data_path = "/home/data1/PACS/kfold"
+            self.data_path = "/home/sst/dataset/PACS/"
         elif self.task == 'VLCS':
             self.data_path = "/home/data1/VLCS"
         elif self.task == 'HOME':

@@ -46,15 +46,15 @@ class SupConLoss(nn.Module):
         elif labels is None and mask is None:
             mask = torch.eye(batch_size, dtype=torch.float32).to(device)
         elif labels is not None:
-            labels = labels.contiguous().view(-1, 1)
+            labels = labels.contiguous().view(-1, 1) # (bs,1)
             if labels.shape[0] != batch_size:
                 raise ValueError('Num of labels does not match num of features')
-            mask = torch.eq(labels, labels.T).float().to(device)
+            mask = torch.eq(labels, labels.T).float().to(device) # (bs,bs)
         else:
             mask = mask.float().to(device)
 
-        contrast_count = features.shape[1]
-        contrast_feature = torch.cat(torch.unbind(features, dim=1), dim=0)
+        contrast_count = features.shape[1] # 2
+        contrast_feature = torch.cat(torch.unbind(features, dim=1), dim=0) # 2*bs,embedding_dim
         if self.contrast_mode == 'one':
             anchor_feature = features[:, 0]
             anchor_count = 1
@@ -63,32 +63,33 @@ class SupConLoss(nn.Module):
             anchor_count = contrast_count
         else:
             raise ValueError('Unknown mode: {}'.format(self.contrast_mode))
-
+        print(anchor_feature.shape,contrast_feature.shape)
         # compute logits
         anchor_dot_contrast = torch.div(
-            torch.matmul(anchor_feature, contrast_feature.T),
+            torch.matmul(anchor_feature, contrast_feature.T), # 2*bs,2*bs
             self.temperature)
         # for numerical stability
         logits_max, _ = torch.max(anchor_dot_contrast, dim=1, keepdim=True)
-        logits = anchor_dot_contrast - logits_max.detach()
+        logits = anchor_dot_contrast - logits_max.detach() # all < 0 # 因为对角线上是自己和自己，所以余弦相似度最大
 
         # tile mask
-        mask = mask.repeat(anchor_count, contrast_count)
-        # mask-out self-contrast cases
+        mask = mask.repeat(anchor_count, contrast_count) # (bs,bs) -> (bs*2,bs*2)
         logits_mask = torch.scatter(
             torch.ones_like(mask),
             1,
             torch.arange(batch_size * anchor_count).view(-1, 1).to(device),
             0
-        )
+        ) # == 1- torch.eye(mask.shape[0])
         mask = mask * logits_mask
 
         # compute log_prob
-        exp_logits = torch.exp(logits) * logits_mask
-        log_prob = logits - torch.log(exp_logits.sum(1, keepdim=True))
+
+        exp_logits = torch.exp(logits) * logits_mask # no identity
+        log_prob = logits - torch.log(exp_logits.sum(1, keepdim=True)) # 已经是论文中所求的结果
 
         # compute mean of log-likelihood over positive
-        mean_log_prob_pos = (mask * log_prob).sum(1) / mask.sum(1)
+
+        mean_log_prob_pos = (mask * log_prob).sum(1) / mask.sum(1) # 分子都是一对样本具备相同语义且不是同一对样本/分母都是一对样本具备相同语义且不是同一对样本
 
         # loss
         loss = - (self.temperature / self.base_temperature) * mean_log_prob_pos

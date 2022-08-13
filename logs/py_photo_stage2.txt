@@ -1,0 +1,317 @@
+/root/anaconda3/envs/torch/bin/python /home/sst/product/Learning_to_diversify/nico2_train2.py
+2022-08-13 14:42:13.459425: I tensorflow/core/util/util.cc:169] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Target domain: ['photo']
+seed-----------all device 1
+INFO:PyTorch: PyramidNet: The add rate is 2.2222222222222223, the final shake p is 0.5
+the prune number is 0.096%
+missing keys:
+fc.weight
+fc.bias
+INFO:PyTorch: PyramidNet: The add rate is 2.2222222222222223, the final shake p is 0.5
+lr = 0.0
+Epoch: 0, Acc: 8.67%
+Phase: val, Epoch: 0, Acc: 0.07236061684460261%
+Phase: test, Epoch: 0, Acc: 0.09461077844311377%
+Saving Best model ...
+lr = 0.0001
+Epoch: 1, Acc: 24.64%
+Phase: val, Epoch: 1, Acc: 0.48279952550415184%
+Phase: test, Epoch: 1, Acc: 0.4227544910179641%
+Saving Best model ...
+lr = 0.0002
+Epoch: 2, Acc: 57.27%
+Phase: val, Epoch: 2, Acc: 0.7947805456702254%
+Phase: test, Epoch: 2, Acc: 0.9221556886227545%
+Saving Best model ...
+lr = 0.00030000000000000003
+Epoch: 3, Acc: 74.64%
+Phase: val, Epoch: 3, Acc: 0.8932384341637011%
+Phase: test, Epoch: 3, Acc: 0.9425149700598803%
+Saving Best model ...
+lr = 0.0004
+Epoch: 4, Acc: 79.27%
+Phase: val, Epoch: 4, Acc: 0.8979833926453143%
+Phase: test, Epoch: 4, Acc: 0.9640718562874252%
+Saving Best model ...
+lr = 0.0005
+Epoch: 5, Acc: 82.63%
+Phase: val, Epoch: 5, Acc: 0.9217081850533808%
+Phase: test, Epoch: 5, Acc: 0.9706586826347305%
+Saving Best model ...
+lr = 0.0006000000000000001
+Epoch: 6, Acc: 84.23%
+Phase: val, Epoch: 6, Acc: 0.9193357058125742%
+Phase: test, Epoch: 6, Acc: 0.9682634730538923%
+lr = 0.0007
+Epoch: 7, Acc: 85.81%
+Phase: val, Epoch: 7, Acc: 0.9193357058125742%
+Phase: test, Epoch: 7, Acc: 0.9658682634730539%
+lr = 0.0008
+Epoch: 8, Acc: 86.11%
+Phase: val, Epoch: 8, Acc: 0.9395017793594306%
+Phase: test, Epoch: 8, Acc: 0.9682634730538923%
+lr = 0.0009000000000000001
+Epoch: 9, Acc: 88.1%
+Phase: val, Epoch: 9, Acc: 0.933570581257414%
+Phase: test, Epoch: 9, Acc: 0.9694610778443113%
+lr = 0.001
+Epoch: 10, Acc: 87.67%
+Phase: val, Epoch: 10, Acc: 0.9454329774614472%
+Phase: test, Epoch: 10, Acc: 0.9664670658682635%
+lr = 0.0009000000000000001
+Epoch: 11, Acc: 88.81%
+Phase: val, Epoch: 11, Acc: 0.9406880189798339%
+Phase: test, Epoch: 11, Acc: 0.9712574850299401%
+Saving Best model ...
+lr = 0.0009000000000000001
+Epoch: 12, Acc: 89.68%
+Phase: val, Epoch: 12, Acc: 0.9478054567022538%
+Phase: test, Epoch: 12, Acc: 0.9688622754491018%
+lr = 0.0009000000000000001
+Epoch: 13, Acc: 90.15%
+Phase: val, Epoch: 13, Acc: 0.9347568208778173%
+Phase: test, Epoch: 13, Acc: 0.9688622754491018%
+lr = 0.0009000000000000001
+Epoch: 14, Acc: 90.46%
+Phase: val, Epoch: 14, Acc: 0.9466192170818505%
+Phase: test, Epoch: 14, Acc: 0.9772455089820359%
+Saving Best model ...
+lr = 0.0008100000000000001
+Epoch: 15, Acc: 90.91%
+Phase: val, Epoch: 15, Acc: 0.9478054567022538%
+Phase: test, Epoch: 15, Acc: 0.974251497005988%
+lr = 0.0008100000000000001
+Epoch: 16, Acc: 90.9%
+Phase: val, Epoch: 16, Acc: 0.9395017793594306%
+Phase: test, Epoch: 16, Acc: 0.9808383233532935%
+Saving Best model ...
+lr = 0.000729
+Epoch: 17, Acc: 92.05%
+Phase: val, Epoch: 17, Acc: 0.9513641755634639%
+Phase: test, Epoch: 17, Acc: 0.9748502994011976%
+lr = 0.000729
+Epoch: 18, Acc: 92.21%
+Phase: val, Epoch: 18, Acc: 0.9513641755634639%
+Phase: test, Epoch: 18, Acc: 0.9688622754491018%
+lr = 0.0006561000000000001
+Epoch: 19, Acc: 91.39%
+Phase: val, Epoch: 19, Acc: 0.9466192170818505%
+Phase: test, Epoch: 19, Acc: 0.9772455089820359%
+lr = 0.00059049
+Epoch: 20, Acc: 92.41%
+Phase: val, Epoch: 20, Acc: 0.9549228944246738%
+Phase: test, Epoch: 20, Acc: 0.9766467065868264%
+lr = 0.00059049
+Epoch: 21, Acc: 92.67%
+Phase: val, Epoch: 21, Acc: 0.9572953736654805%
+Phase: test, Epoch: 21, Acc: 0.9784431137724551%
+lr = 0.00059049
+Epoch: 22, Acc: 92.41%
+Phase: val, Epoch: 22, Acc: 0.9644128113879004%
+Phase: test, Epoch: 22, Acc: 0.9706586826347305%
+lr = 0.000531441
+Epoch: 23, Acc: 92.67%
+Phase: val, Epoch: 23, Acc: 0.963226571767497%
+Phase: test, Epoch: 23, Acc: 0.9736526946107784%
+lr = 0.000531441
+Epoch: 24, Acc: 93.0%
+Phase: val, Epoch: 24, Acc: 0.9549228944246738%
+Phase: test, Epoch: 24, Acc: 0.9760479041916168%
+lr = 0.0004782969
+Epoch: 25, Acc: 92.83%
+Phase: val, Epoch: 25, Acc: 0.966785290628707%
+Phase: test, Epoch: 25, Acc: 0.9724550898203593%
+lr = 0.00043046721
+Epoch: 26, Acc: 93.25%
+Phase: val, Epoch: 26, Acc: 0.9608540925266904%
+Phase: test, Epoch: 26, Acc: 0.9760479041916168%
+lr = 0.000387420489
+Epoch: 27, Acc: 93.36%
+Phase: val, Epoch: 27, Acc: 0.9644128113879004%
+Phase: test, Epoch: 27, Acc: 0.9790419161676647%
+lr = 0.000387420489
+Epoch: 28, Acc: 93.12%
+Phase: val, Epoch: 28, Acc: 0.9608540925266904%
+Phase: test, Epoch: 28, Acc: 0.9760479041916168%
+lr = 0.0003486784401
+Epoch: 29, Acc: 93.42%
+Phase: val, Epoch: 29, Acc: 0.966785290628707%
+Phase: test, Epoch: 29, Acc: 0.9760479041916168%
+lr = 0.0003486784401
+Epoch: 30, Acc: 93.59%
+Phase: val, Epoch: 30, Acc: 0.9608540925266904%
+Phase: test, Epoch: 30, Acc: 0.9808383233532935%
+lr = 0.00031381059609000004
+Epoch: 31, Acc: 93.72%
+Phase: val, Epoch: 31, Acc: 0.9596678529062871%
+Phase: test, Epoch: 31, Acc: 0.981437125748503%
+Saving Best model ...
+lr = 0.00028242953648100003
+Epoch: 32, Acc: 94.15%
+Phase: val, Epoch: 32, Acc: 0.9620403321470937%
+Phase: test, Epoch: 32, Acc: 0.9796407185628743%
+lr = 0.00028242953648100003
+Epoch: 33, Acc: 93.88%
+Phase: val, Epoch: 33, Acc: 0.9655990510083037%
+Phase: test, Epoch: 33, Acc: 0.9820359281437125%
+Saving Best model ...
+lr = 0.00025418658283290005
+Epoch: 34, Acc: 93.42%
+Phase: val, Epoch: 34, Acc: 0.9608540925266904%
+Phase: test, Epoch: 34, Acc: 0.981437125748503%
+lr = 0.00022876792454961005
+Epoch: 35, Acc: 94.15%
+Phase: val, Epoch: 35, Acc: 0.9620403321470937%
+Phase: test, Epoch: 35, Acc: 0.981437125748503%
+lr = 0.00022876792454961005
+Epoch: 36, Acc: 94.26%
+Phase: val, Epoch: 36, Acc: 0.9596678529062871%
+Phase: test, Epoch: 36, Acc: 0.9850299401197605%
+Saving Best model ...
+lr = 0.00020589113209464906
+Epoch: 37, Acc: 93.99%
+Phase: val, Epoch: 37, Acc: 0.9655990510083037%
+Phase: test, Epoch: 37, Acc: 0.9802395209580839%
+lr = 0.00020589113209464906
+Epoch: 38, Acc: 94.66%
+Phase: val, Epoch: 38, Acc: 0.963226571767497%
+Phase: test, Epoch: 38, Acc: 0.9808383233532935%
+lr = 0.00018530201888518417
+Epoch: 39, Acc: 94.23%
+Phase: val, Epoch: 39, Acc: 0.966785290628707%
+Phase: test, Epoch: 39, Acc: 0.9790419161676647%
+lr = 0.00018530201888518417
+Epoch: 40, Acc: 94.65%
+Phase: val, Epoch: 40, Acc: 0.9620403321470937%
+Phase: test, Epoch: 40, Acc: 0.981437125748503%
+lr = 0.00016677181699666576
+Epoch: 41, Acc: 94.69%
+Phase: val, Epoch: 41, Acc: 0.9644128113879004%
+Phase: test, Epoch: 41, Acc: 0.981437125748503%
+lr = 0.0001500946352969992
+Epoch: 42, Acc: 94.0%
+Phase: val, Epoch: 42, Acc: 0.9644128113879004%
+Phase: test, Epoch: 42, Acc: 0.9826347305389221%
+lr = 0.0001350851717672993
+Epoch: 43, Acc: 94.25%
+Phase: val, Epoch: 43, Acc: 0.9679715302491103%
+Phase: test, Epoch: 43, Acc: 0.9820359281437125%
+lr = 0.00012157665459056936
+Epoch: 44, Acc: 94.74%
+Phase: val, Epoch: 44, Acc: 0.9691577698695136%
+Phase: test, Epoch: 44, Acc: 0.9772455089820359%
+lr = 0.00012157665459056936
+Epoch: 45, Acc: 94.58%
+Phase: val, Epoch: 45, Acc: 0.966785290628707%
+Phase: test, Epoch: 45, Acc: 0.9796407185628743%
+lr = 0.00010941898913151243
+Epoch: 46, Acc: 94.29%
+Phase: val, Epoch: 46, Acc: 0.9655990510083037%
+Phase: test, Epoch: 46, Acc: 0.981437125748503%
+lr = 9.847709021836118e-05
+Epoch: 47, Acc: 93.95%
+Phase: val, Epoch: 47, Acc: 0.9691577698695136%
+Phase: test, Epoch: 47, Acc: 0.9826347305389221%
+lr = 8.862938119652506e-05
+Epoch: 48, Acc: 94.5%
+Phase: val, Epoch: 48, Acc: 0.963226571767497%
+Phase: test, Epoch: 48, Acc: 0.9778443113772455%
+lr = 8.862938119652506e-05
+Epoch: 49, Acc: 94.62%
+Phase: val, Epoch: 49, Acc: 0.9655990510083037%
+Phase: test, Epoch: 49, Acc: 0.9808383233532935%
+lr = 8.862938119652506e-05
+Epoch: 50, Acc: 94.22%
+Phase: val, Epoch: 50, Acc: 0.970344009489917%
+Phase: test, Epoch: 50, Acc: 0.9784431137724551%
+lr = 7.976644307687256e-05
+Epoch: 51, Acc: 94.79%
+Phase: val, Epoch: 51, Acc: 0.963226571767497%
+Phase: test, Epoch: 51, Acc: 0.9784431137724551%
+lr = 7.17897987691853e-05
+Epoch: 52, Acc: 94.77%
+Phase: val, Epoch: 52, Acc: 0.966785290628707%
+Phase: test, Epoch: 52, Acc: 0.9790419161676647%
+lr = 7.17897987691853e-05
+Epoch: 53, Acc: 94.06%
+Phase: val, Epoch: 53, Acc: 0.9679715302491103%
+Phase: test, Epoch: 53, Acc: 0.981437125748503%
+lr = 7.17897987691853e-05
+Epoch: 54, Acc: 94.97%
+Phase: val, Epoch: 54, Acc: 0.966785290628707%
+Phase: test, Epoch: 54, Acc: 0.9838323353293413%
+lr = 7.17897987691853e-05
+Epoch: 55, Acc: 94.75%
+Phase: val, Epoch: 55, Acc: 0.9655990510083037%
+Phase: test, Epoch: 55, Acc: 0.9802395209580839%
+lr = 6.461081889226677e-05
+Epoch: 56, Acc: 95.1%
+Phase: val, Epoch: 56, Acc: 0.9691577698695136%
+Phase: test, Epoch: 56, Acc: 0.9760479041916168%
+lr = 6.461081889226677e-05
+Epoch: 57, Acc: 95.07%
+Phase: val, Epoch: 57, Acc: 0.9655990510083037%
+Phase: test, Epoch: 57, Acc: 0.9796407185628743%
+lr = 5.81497370030401e-05
+Epoch: 58, Acc: 94.0%
+Phase: val, Epoch: 58, Acc: 0.9679715302491103%
+Phase: test, Epoch: 58, Acc: 0.981437125748503%
+lr = 5.81497370030401e-05
+Epoch: 59, Acc: 94.87%
+Phase: val, Epoch: 59, Acc: 0.963226571767497%
+Phase: test, Epoch: 59, Acc: 0.9832335329341317%
+lr = 5.81497370030401e-05
+Epoch: 60, Acc: 94.33%
+Phase: val, Epoch: 60, Acc: 0.9679715302491103%
+Phase: test, Epoch: 60, Acc: 0.9808383233532935%
+lr = 5.233476330273609e-05
+Epoch: 61, Acc: 94.74%
+Phase: val, Epoch: 61, Acc: 0.9620403321470937%
+Phase: test, Epoch: 61, Acc: 0.9802395209580839%
+lr = 5.233476330273609e-05
+Epoch: 62, Acc: 93.75%
+Phase: val, Epoch: 62, Acc: 0.9655990510083037%
+Phase: test, Epoch: 62, Acc: 0.9802395209580839%
+lr = 5.233476330273609e-05
+Epoch: 63, Acc: 94.79%
+Phase: val, Epoch: 63, Acc: 0.9644128113879004%
+Phase: test, Epoch: 63, Acc: 0.9820359281437125%
+lr = 5.233476330273609e-05
+Epoch: 64, Acc: 94.91%
+Phase: val, Epoch: 64, Acc: 0.9620403321470937%
+Phase: test, Epoch: 64, Acc: 0.9808383233532935%
+lr = 4.7101286972462485e-05
+Epoch: 65, Acc: 94.65%
+Phase: val, Epoch: 65, Acc: 0.966785290628707%
+Phase: test, Epoch: 65, Acc: 0.9796407185628743%
+lr = 4.239115827521624e-05
+Traceback (most recent call last):
+  File "/home/sst/product/Learning_to_diversify/nico2_train2.py", line 338, in <module>
+    main()
+  File "/home/sst/product/Learning_to_diversify/nico2_train2.py", line 326, in main
+    trainer.do_training()
+  File "/home/sst/product/Learning_to_diversify/nico2_train2.py", line 249, in do_training
+    train_loss, current_epoch, val_acc = self._do_epoch(self.current_epoch)
+  File "/home/sst/product/Learning_to_diversify/nico2_train2.py", line 190, in _do_epoch
+    logits = self.extractor(data)
+  File "/root/anaconda3/envs/torch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/sst/product/Learning_to_diversify/models/pyramidnet.py", line 363, in forward
+    x = self.layer1(x)
+  File "/root/anaconda3/envs/torch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/root/anaconda3/envs/torch/lib/python3.9/site-packages/torch/nn/modules/container.py", line 141, in forward
+    input = module(input)
+  File "/root/anaconda3/envs/torch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/sst/product/Learning_to_diversify/models/pyramidnet.py", line 218, in forward
+    out = self.shake_drop(out)
+  File "/root/anaconda3/envs/torch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/sst/product/Learning_to_diversify/models/pyramidnet.py", line 75, in forward
+    return ShakeDropFunction.apply(x, self.training, self.p_drop, self.alpha_range)
+  File "/home/sst/product/Learning_to_diversify/models/pyramidnet.py", line 45, in forward
+    gate = torch.FloatTensor([0]).bernoulli_(1 - p_drop).to(x.device)
+KeyboardInterrupt
+
+Process finished with exit code 130 (interrupted by signal 2: SIGINT)

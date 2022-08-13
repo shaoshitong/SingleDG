@@ -212,11 +212,14 @@ def entropy_loss(x):
 
 def reparametrize(mu, logvar, factor=0.2):
     std = logvar.div(2).exp()
-    eps = std.data.new(std.size()).normal_()
-    return mu + factor*std*eps
+    eps = std.data.new(std.size()).normal_() # 0-1 gaussian distribution
+    ratio=factor*std*eps
+    # print(ratio.shape,ratio)
+    return mu + ratio # mu - mean , ratio - std
 
 def loglikeli(mu, logvar, y_samples):
-    return (-(mu - y_samples)**2 /logvar.exp()-logvar).mean()#.sum(dim=1).mean(dim=0)
+    return (-(mu - y_samples)**2 /logvar.exp()-logvar).mean()
+    #log(-(mu - y_samples)**2 /logvar.exp())
 
 def club(mu, logvar, y_samples):
 
@@ -225,6 +228,6 @@ def club(mu, logvar, y_samples):
     random_index = torch.randperm(sample_size).long()
 
     positive = - (mu - y_samples) ** 2 / logvar.exp()
-    negative = - (mu - y_samples[random_index]) ** 2 / logvar.exp()
+    negative = - (mu - y_samples[random_index]) ** 2 / logvar.exp()  # log(z_j^+|z_i)
     upper_bound = (positive.sum(dim=-1) - negative.sum(dim=-1)).mean()
     return upper_bound / 2.

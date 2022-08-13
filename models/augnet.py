@@ -83,7 +83,7 @@ class AugNet(nn.Module):
             param.requires_grad=False
 
     def forward(self, x, estimation=False):
-        if not estimation:
+        if not estimation: # 不进行估算
             spatial = nn.Conv2d(3, 3, 9).cuda()
             spatial_up = nn.ConvTranspose2d(3, 3, 9).cuda()
 
