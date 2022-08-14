@@ -1,0 +1,334 @@
+lr = 0.0
+Epoch: 0, Acc: 7.63%
+Phase: val, Epoch: 0, Acc: 0.07467532467532467%
+Phase: test, Epoch: 0, Acc: 0.12649529142275387%
+Saving Best model ...
+lr = 0.0001
+Epoch: 1, Acc: 32.33%
+Phase: val, Epoch: 1, Acc: 0.5974025974025974%
+Phase: test, Epoch: 1, Acc: 0.29600407228302367%
+Saving Best model ...
+lr = 0.0002
+Epoch: 2, Acc: 64.25%
+Phase: val, Epoch: 2, Acc: 0.8165584415584416%
+Phase: test, Epoch: 2, Acc: 0.5795367778060575%
+Saving Best model ...
+lr = 0.00030000000000000003
+Epoch: 3, Acc: 75.09%
+Phase: val, Epoch: 3, Acc: 0.8944805194805194%
+Phase: test, Epoch: 3, Acc: 0.7765334690761008%
+Saving Best model ...
+lr = 0.0004
+Epoch: 4, Acc: 81.38%
+Phase: val, Epoch: 4, Acc: 0.9172077922077922%
+Phase: test, Epoch: 4, Acc: 0.7907864596589463%
+Saving Best model ...
+lr = 0.0005
+Epoch: 5, Acc: 84.26%
+Phase: val, Epoch: 5, Acc: 0.9431818181818182%
+Phase: test, Epoch: 5, Acc: 0.8106388393993382%
+Saving Best model ...
+lr = 0.0006000000000000001
+Epoch: 6, Acc: 85.83%
+Phase: val, Epoch: 6, Acc: 0.935064935064935%
+Phase: test, Epoch: 6, Acc: 0.8182743700687197%
+Saving Best model ...
+lr = 0.0007
+Epoch: 7, Acc: 87.41%
+Phase: val, Epoch: 7, Acc: 0.9366883116883117%
+Phase: test, Epoch: 7, Acc: 0.8332909137185034%
+Saving Best model ...
+lr = 0.0008
+Epoch: 8, Acc: 87.61%
+Phase: val, Epoch: 8, Acc: 0.939935064935065%
+Phase: test, Epoch: 8, Acc: 0.8355815729193179%
+Saving Best model ...
+lr = 0.0009000000000000001
+Epoch: 9, Acc: 88.51%
+Phase: val, Epoch: 9, Acc: 0.9496753246753247%
+Phase: test, Epoch: 9, Acc: 0.8386357851870705%
+Saving Best model ...
+lr = 0.001
+Epoch: 10, Acc: 88.92%
+Phase: val, Epoch: 10, Acc: 0.9415584415584416%
+Phase: test, Epoch: 10, Acc: 0.8371086790531942%
+lr = 0.001
+Epoch: 11, Acc: 89.82%
+Phase: val, Epoch: 11, Acc: 0.9512987012987013%
+Phase: test, Epoch: 11, Acc: 0.7734792568083482%
+lr = 0.001
+Epoch: 12, Acc: 90.5%
+Phase: val, Epoch: 12, Acc: 0.948051948051948%
+Phase: test, Epoch: 12, Acc: 0.7821328582336472%
+lr = 0.001
+Epoch: 13, Acc: 91.14%
+Phase: val, Epoch: 13, Acc: 0.9594155844155844%
+Phase: test, Epoch: 13, Acc: 0.8651056248409265%
+Saving Best model ...
+lr = 0.001
+Epoch: 14, Acc: 91.08%
+Phase: val, Epoch: 14, Acc: 0.9594155844155844%
+Phase: test, Epoch: 14, Acc: 0.849580045813184%
+lr = 0.001
+Epoch: 15, Acc: 92.06%
+Phase: val, Epoch: 15, Acc: 0.9626623376623377%
+Phase: test, Epoch: 15, Acc: 0.8569610587935862%
+lr = 0.001
+Epoch: 16, Acc: 92.52%
+Phase: val, Epoch: 16, Acc: 0.9496753246753247%
+Phase: test, Epoch: 16, Acc: 0.8254008653601426%
+lr = 0.001
+Epoch: 17, Acc: 92.78%
+Phase: val, Epoch: 17, Acc: 0.9642857142857143%
+Phase: test, Epoch: 17, Acc: 0.8551794349707305%
+lr = 0.0009000000000000001
+Epoch: 18, Acc: 92.87%
+Phase: val, Epoch: 18, Acc: 0.961038961038961%
+Phase: test, Epoch: 18, Acc: 0.8549249172817511%
+lr = 0.0009000000000000001
+Epoch: 19, Acc: 93.69%
+Phase: val, Epoch: 19, Acc: 0.9675324675324676%
+Phase: test, Epoch: 19, Acc: 0.8556884703486892%
+lr = 0.0009000000000000001
+Epoch: 20, Acc: 93.49%
+Phase: val, Epoch: 20, Acc: 0.9642857142857143%
+Phase: test, Epoch: 20, Acc: 0.7994400610842454%
+lr = 0.0008100000000000001
+Epoch: 21, Acc: 92.9%
+Phase: val, Epoch: 21, Acc: 0.9675324675324676%
+Phase: test, Epoch: 21, Acc: 0.8544158819037924%
+lr = 0.000729
+Epoch: 22, Acc: 93.25%
+Phase: val, Epoch: 22, Acc: 0.9724025974025974%
+Phase: test, Epoch: 22, Acc: 0.8567065411046068%
+lr = 0.000729
+Epoch: 23, Acc: 93.92%
+Phase: val, Epoch: 23, Acc: 0.9756493506493507%
+Phase: test, Epoch: 23, Acc: 0.8699414609315348%
+Saving Best model ...
+lr = 0.000729
+Epoch: 24, Acc: 93.77%
+Phase: val, Epoch: 24, Acc: 0.9724025974025974%
+Phase: test, Epoch: 24, Acc: 0.8600152710613388%
+lr = 0.000729
+Epoch: 25, Acc: 93.9%
+Phase: val, Epoch: 25, Acc: 0.9707792207792207%
+Phase: test, Epoch: 25, Acc: 0.8251463476711631%
+lr = 0.0006561000000000001
+Epoch: 26, Acc: 94.58%
+Phase: val, Epoch: 26, Acc: 0.9724025974025974%
+Phase: test, Epoch: 26, Acc: 0.8589972003054213%
+lr = 0.0006561000000000001
+Epoch: 27, Acc: 94.71%
+Phase: val, Epoch: 27, Acc: 0.9675324675324676%
+Phase: test, Epoch: 27, Acc: 0.8589972003054213%
+lr = 0.00059049
+Epoch: 28, Acc: 95.2%
+Phase: val, Epoch: 28, Acc: 0.9545454545454546%
+Phase: test, Epoch: 28, Acc: 0.8572155764825655%
+lr = 0.000531441
+Epoch: 29, Acc: 95.68%
+Phase: val, Epoch: 29, Acc: 0.9724025974025974%
+Phase: test, Epoch: 29, Acc: 0.8439806566556376%
+lr = 0.000531441
+Epoch: 30, Acc: 94.52%
+Phase: val, Epoch: 30, Acc: 0.9659090909090909%
+Phase: test, Epoch: 30, Acc: 0.8343089844744209%
+lr = 0.0004782969
+Epoch: 31, Acc: 94.78%
+Phase: val, Epoch: 31, Acc: 0.9594155844155844%
+Phase: test, Epoch: 31, Acc: 0.8544158819037924%
+lr = 0.00043046721
+Epoch: 32, Acc: 95.22%
+Phase: val, Epoch: 32, Acc: 0.9691558441558441%
+Phase: test, Epoch: 32, Acc: 0.8673962840417409%
+lr = 0.00043046721
+Epoch: 33, Acc: 95.53%
+Phase: val, Epoch: 33, Acc: 0.9691558441558441%
+Phase: test, Epoch: 33, Acc: 0.8679053194196996%
+lr = 0.00043046721
+Epoch: 34, Acc: 94.14%
+Phase: val, Epoch: 34, Acc: 0.961038961038961%
+Phase: test, Epoch: 34, Acc: 0.862814965640112%
+lr = 0.000387420489
+Epoch: 35, Acc: 95.4%
+Phase: val, Epoch: 35, Acc: 0.9724025974025974%
+Phase: test, Epoch: 35, Acc: 0.8615423771952151%
+lr = 0.000387420489
+Epoch: 36, Acc: 95.99%
+Phase: val, Epoch: 36, Acc: 0.9675324675324676%
+Phase: test, Epoch: 36, Acc: 0.8434716212776788%
+lr = 0.0003486784401
+Epoch: 37, Acc: 95.55%
+Phase: val, Epoch: 37, Acc: 0.9675324675324676%
+Phase: test, Epoch: 37, Acc: 0.8824128276915245%
+Saving Best model ...
+lr = 0.00031381059609000004
+Epoch: 38, Acc: 95.31%
+Phase: val, Epoch: 38, Acc: 0.961038961038961%
+Phase: test, Epoch: 38, Acc: 0.8635785187070502%
+lr = 0.00031381059609000004
+Epoch: 39, Acc: 96.16%
+Phase: val, Epoch: 39, Acc: 0.9659090909090909%
+Phase: test, Epoch: 39, Acc: 0.8607788241282769%
+lr = 0.00031381059609000004
+Epoch: 40, Acc: 95.5%
+Phase: val, Epoch: 40, Acc: 0.9707792207792207%
+Phase: test, Epoch: 40, Acc: 0.8653601425299058%
+lr = 0.00028242953648100003
+Epoch: 41, Acc: 95.62%
+Phase: val, Epoch: 41, Acc: 0.9707792207792207%
+Phase: test, Epoch: 41, Acc: 0.8592517179944006%
+lr = 0.00025418658283290005
+Epoch: 42, Acc: 95.13%
+Phase: val, Epoch: 42, Acc: 0.9756493506493507%
+Phase: test, Epoch: 42, Acc: 0.8630694833290914%
+lr = 0.00025418658283290005
+Epoch: 43, Acc: 95.92%
+Phase: val, Epoch: 43, Acc: 0.9691558441558441%
+Phase: test, Epoch: 43, Acc: 0.8666327309748028%
+lr = 0.00025418658283290005
+Epoch: 44, Acc: 95.7%
+Phase: val, Epoch: 44, Acc: 0.9788961038961039%
+Phase: test, Epoch: 44, Acc: 0.862814965640112%
+lr = 0.00022876792454961005
+Epoch: 45, Acc: 95.75%
+Phase: val, Epoch: 45, Acc: 0.9805194805194806%
+Phase: test, Epoch: 45, Acc: 0.8589972003054213%
+lr = 0.00022876792454961005
+Epoch: 46, Acc: 95.18%
+Phase: val, Epoch: 46, Acc: 0.9659090909090909%
+Phase: test, Epoch: 46, Acc: 0.8587426826164418%
+lr = 0.00020589113209464906
+Epoch: 47, Acc: 95.39%
+Phase: val, Epoch: 47, Acc: 0.9707792207792207%
+Phase: test, Epoch: 47, Acc: 0.8633240010180707%
+lr = 0.00018530201888518417
+Epoch: 48, Acc: 95.83%
+Phase: val, Epoch: 48, Acc: 0.9707792207792207%
+Phase: test, Epoch: 48, Acc: 0.8735047085772462%
+lr = 0.00018530201888518417
+Epoch: 49, Acc: 96.51%
+Phase: val, Epoch: 49, Acc: 0.974025974025974%
+Phase: test, Epoch: 49, Acc: 0.8742682616441843%
+lr = 0.00016677181699666576
+Epoch: 50, Acc: 95.96%
+Phase: val, Epoch: 50, Acc: 0.9821428571428571%
+Phase: test, Epoch: 50, Acc: 0.8816492746245864%
+lr = 0.0001500946352969992
+Epoch: 51, Acc: 95.64%
+Phase: val, Epoch: 51, Acc: 0.9788961038961039%
+Phase: test, Epoch: 51, Acc: 0.8735047085772462%
+lr = 0.0001350851717672993
+Epoch: 52, Acc: 96.12%
+Phase: val, Epoch: 52, Acc: 0.9772727272727273%
+Phase: test, Epoch: 52, Acc: 0.869432425553576%
+lr = 0.00012157665459056936
+Epoch: 53, Acc: 95.68%
+Phase: val, Epoch: 53, Acc: 0.9788961038961039%
+Phase: test, Epoch: 53, Acc: 0.8712140493764317%
+lr = 0.00010941898913151243
+Epoch: 54, Acc: 95.66%
+Phase: val, Epoch: 54, Acc: 0.9788961038961039%
+Phase: test, Epoch: 54, Acc: 0.872741155510308%
+lr = 9.847709021836118e-05
+Epoch: 55, Acc: 96.12%
+Phase: val, Epoch: 55, Acc: 0.9707792207792207%
+Phase: test, Epoch: 55, Acc: 0.8763044031560193%
+lr = 9.847709021836118e-05
+Epoch: 56, Acc: 96.29%
+Phase: val, Epoch: 56, Acc: 0.9724025974025974%
+Phase: test, Epoch: 56, Acc: 0.8709595316874523%
+lr = 8.862938119652506e-05
+Epoch: 57, Acc: 95.96%
+Phase: val, Epoch: 57, Acc: 0.9707792207792207%
+Phase: test, Epoch: 57, Acc: 0.8742682616441843%
+lr = 7.976644307687256e-05
+Epoch: 58, Acc: 96.01%
+Phase: val, Epoch: 58, Acc: 0.9707792207792207%
+Phase: test, Epoch: 58, Acc: 0.8724866378213286%
+lr = 7.976644307687256e-05
+Epoch: 59, Acc: 96.27%
+Phase: val, Epoch: 59, Acc: 0.9707792207792207%
+Phase: test, Epoch: 59, Acc: 0.8640875540850089%
+lr = 7.17897987691853e-05
+Epoch: 60, Acc: 96.19%
+Phase: val, Epoch: 60, Acc: 0.974025974025974%
+Phase: test, Epoch: 60, Acc: 0.8686688724866378%
+lr = 6.461081889226677e-05
+Epoch: 61, Acc: 96.91%
+Phase: val, Epoch: 61, Acc: 0.9724025974025974%
+Phase: test, Epoch: 61, Acc: 0.8656146602188852%
+lr = 6.461081889226677e-05
+Epoch: 62, Acc: 96.62%
+Phase: val, Epoch: 62, Acc: 0.974025974025974%
+Phase: test, Epoch: 62, Acc: 0.8633240010180707%
+lr = 5.81497370030401e-05
+Epoch: 63, Acc: 95.9%
+Phase: val, Epoch: 63, Acc: 0.9707792207792207%
+Phase: test, Epoch: 63, Acc: 0.8653601425299058%
+lr = 5.233476330273609e-05
+Epoch: 64, Acc: 96.05%
+Phase: val, Epoch: 64, Acc: 0.9707792207792207%
+Phase: test, Epoch: 64, Acc: 0.8719776024433699%
+lr = 4.7101286972462485e-05
+Epoch: 65, Acc: 95.9%
+Phase: val, Epoch: 65, Acc: 0.9691558441558441%
+Phase: test, Epoch: 65, Acc: 0.8704504963094936%
+lr = 4.239115827521624e-05
+Epoch: 66, Acc: 96.03%
+Phase: val, Epoch: 66, Acc: 0.9724025974025974%
+Phase: test, Epoch: 66, Acc: 0.8701959786205141%
+lr = 4.239115827521624e-05
+Epoch: 67, Acc: 95.85%
+Phase: val, Epoch: 67, Acc: 0.974025974025974%
+Phase: test, Epoch: 67, Acc: 0.8663782132858233%
+lr = 3.8152042447694614e-05
+Epoch: 68, Acc: 96.43%
+Phase: val, Epoch: 68, Acc: 0.9756493506493507%
+Phase: test, Epoch: 68, Acc: 0.8653601425299058%
+lr = 3.8152042447694614e-05
+Epoch: 69, Acc: 96.16%
+Phase: val, Epoch: 69, Acc: 0.9772727272727273%
+Phase: test, Epoch: 69, Acc: 0.8638330363960295%
+lr = 3.433683820292515e-05
+Epoch: 70, Acc: 96.32%
+Phase: val, Epoch: 70, Acc: 0.9756493506493507%
+Phase: test, Epoch: 70, Acc: 0.8630694833290914%
+lr = 3.433683820292515e-05
+Epoch: 71, Acc: 96.23%
+Phase: val, Epoch: 71, Acc: 0.9788961038961039%
+Phase: test, Epoch: 71, Acc: 0.8658691779078646%
+lr = 3.090315438263264e-05
+Epoch: 72, Acc: 96.1%
+Phase: val, Epoch: 72, Acc: 0.9707792207792207%
+Phase: test, Epoch: 72, Acc: 0.8724866378213286%
+lr = 2.7812838944369376e-05
+Epoch: 73, Acc: 95.66%
+Phase: val, Epoch: 73, Acc: 0.9788961038961039%
+Phase: test, Epoch: 73, Acc: 0.8701959786205141%
+lr = 2.503155504993244e-05
+Epoch: 74, Acc: 96.12%
+Phase: val, Epoch: 74, Acc: 0.974025974025974%
+Phase: test, Epoch: 74, Acc: 0.8714685670654111%
+lr = 2.503155504993244e-05
+Epoch: 75, Acc: 96.47%
+Phase: val, Epoch: 75, Acc: 0.9756493506493507%
+Phase: test, Epoch: 75, Acc: 0.872741155510308%
+lr = 2.2528399544939195e-05
+Epoch: 76, Acc: 96.53%
+Phase: val, Epoch: 76, Acc: 0.9772727272727273%
+Phase: test, Epoch: 76, Acc: 0.8666327309748028%
+lr = 2.0275559590445276e-05
+Epoch: 77, Acc: 95.86%
+Phase: val, Epoch: 77, Acc: 0.974025974025974%
+Phase: test, Epoch: 77, Acc: 0.8684143547976584%
+lr = 1.8248003631400748e-05
+Epoch: 78, Acc: 96.12%
+Phase: val, Epoch: 78, Acc: 0.9756493506493507%
+Phase: test, Epoch: 78, Acc: 0.8686688724866378%
+lr = 1.6423203268260675e-05
+Epoch: 79, Acc: 96.03%
+Phase: val, Epoch: 79, Acc: 0.9788961038961039%
+Phase: test, Epoch: 79, Acc: 0.8658691779078646%
+lr = 1.4780882941434607e-05
